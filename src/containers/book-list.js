@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {selectBook} from '../actions/index';
+import {bindActionCreators} from 'redux';
 
 class BookList extends Component {
   renderList(){
@@ -19,7 +21,7 @@ class BookList extends Component {
   }
 }
 
-//The glue 
+//The glue
 function mapStateToProps(state) {
   //Whatever is returned will show up as props inside of BookList
   return {
@@ -27,4 +29,10 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(BookList);
+//Anything returned from this function will end up as props on the BookList container
+function mapDispatchToProps(dispatch) {
+  //Whenever selectBook is called. the result should be passed to all of our reducers
+  return bindActionCreators({selectBook : selectBook}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);
